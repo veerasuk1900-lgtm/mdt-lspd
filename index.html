@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MDT Reports</title>
+
+<style>
+  
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff88;
+  font-family: "Courier New", monospace;
+}
+
+/* ===== LOGIN CENTER ===== */
+#login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  border: none;
+  box-shadow: none;
+}
+
+.login-box {
+  width: 350px;
+  padding: 30px;
+  border: 2px solid #00ff88;
+  box-shadow: 0 0 25px #00ff88;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 👈 ตรงนี้แหละ */
+}
+
+.login-box h1 {
+  margin-bottom: 25px;
+  border-bottom: 1px solid #00ff88;
+  padding-bottom: 10px;
+}
+
+.login-box input {
+  text-align: center;
+}
+
+.login-box .button {
+  width: 100%;
+  max-width: 280px; /* 👈 บังคับไม่ให้ยาวเกิน */
+}
+
+.login-box .button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  border: 2px solid #00ff88;
+  padding: 40px;
+  box-sizing: border-box;
+  box-shadow: 0 0 40px #00ff88;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 250px);
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.card {
+  border: 2px solid #00ff88;
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #00ff88;
+}
+
+.card:hover {
+  background: #00ff88;
+  color: #000;
+  transform: scale(1.05);
+}
+
+.icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 16px;
+}
+
+h1 {
+  text-align: center;
+  border-bottom: 1px solid #00ff88;
+}
+
+/* ===== BUTTON ===== */
+.button {
+  width: 280px;
+  padding: 15px;
+  text-align: center;
+  border: 2px solid #00ff88;
+  margin: 10px auto;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #00ff88;
+  color: #000;
+}
+
+.form { display: none; }
+
+input, textarea {
+  width: 100%;
+  background: black;
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  margin-top: 5px;
+  padding: 8px;
+}
+
+/* ===== FORM SIZE LIKE LOGIN ===== */
+.form-box {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ===== GRID (ไม่ติดกัน + ขนาดพอดี) ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-grid div {
+  display: flex;
+  flex-direction: column;
+}
+
+</style>
+</head>
+
+<body>
+
+  <div class="container" id="login">
+
+  <div class="login-box">
+    <h1>LOGIN</h1>
+
+    <input id="username" type="text" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+
+    <div class="button" onclick="login()">ENTER SYSTEM</div>
+
+    <p id="error" style="color:red; margin-top:10px;"></p>
+  </div>
+
+</div>
+
+<div class="container" id="home" style="display:none;">
+
+  <div class="header">
+    <h1>
+      MOBILE DATA TERMINAL<br>
+      LOS SANTOS POLICE DEPARTMENT
+    </h1>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard">
+
+    <div class="card" onclick="openArs()">
+      <div class="icon">📰</div>
+      <div class="title">ARREST REPORT</div>
+    </div>
+
+    <div class="card" onclick="openForm()">
+      <div class="icon">📁</div>
+      <div class="title">EVIDENCE REPORT</div>
+    </div>
+
+    <div class="card" onclick="openuof()">
+      <div class="icon">⚡</div>
+      <div class="title">USE OF FORCE REPORT</div>
+    </div>
+
+    <div class="card" onclick="window.open('https://docs.google.com/spreadsheets/d/1ZwHQN4Vu8l6dWhaKHzzr3ncAUzzs4keASiNGoH9MmlQ/edit?usp=sharing','_blank')">
+  <div class="icon">👮</div>
+  <div class="title">OFFICER DATA</div>
+</div>
+
+  </div>
+
+</div>
+
+</div>
+
+<!-- EVIDENCE -->
+<div class="container form" id="form">
+  <h1>EVIDENCE REPORT</h1>
+
+  <div>
+    <b>Date:</b>
+    <input type="date">
+  </div>
+
+  <hr>
+
+  <div class="section">
+  <b>PERSON / EMPLOYEE INFO</b>
+
+  <div class="form-grid">
+
+    <div>
+      Name(s):
+      <input type="text">
+    </div>
+
+    <div>
+      Evidence Type(s):
+      <input type="text">
+    </div>
+
+    <div>
+      Location:
+      <input type="text">
+    </div>
+
+    <div>
+      Officer:
+      <input type="text">
+    </div>
+
+    <div>
+      Callsign:
+      <input type="text">
+    </div>
+
+  </div>
+</div>
+
+  <div class="section">
+    <b>BWC / DASHCAM / PHOTO</b>
+    <div>- <input type="text"></div>
+    <div>- <input type="text"></div>
+    <div>
+      Evidence Photo:
+      <input type="file">
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <input id="reportId" placeholder="LSPD-EV-0000"> | Los Santos Police Department - Evidence Report File
+  </div><br>
+
+  <Center>
+  <div class="button" onclick="previewReport()">CONFIRM</div>
+  <div class="button" onclick="goBack()">BACK</div>
+</div></center>
+<div class="container form" id="uof">
+  <h1>USE OF FORCE REPORT</h1>
+
+  <b>Date Submitted:</b>
+  <input id="u_date" type="date">
+
+  <div class="form-grid">
+
+  <div>
+    Officer:
+    <input id="u_officer">
+  </div>
+
+  <div>
+    Callsign:
+    <input id="u_callsign">
+  </div>
+
+  <div>
+    Time:
+    <input id="u_time" type="time">
+  </div>
+
+  <div>
+    Date:
+    <input id="u_date2" type="date">
+  </div>
+
+  <div>
+    Location:
+    <input id="u_location">
+  </div>
+
+</div>
+
+  <div class="section">
+    UOF TYPE:
+    <textarea id="u_type" rows="4"></textarea>
+  </div>
+
+  <div class="section">
+    Supporting Evidence::
+    <input id="u_evidence">
+  </div>
+
+  <div class="section">
+    BWC / Dashboard Footage:
+    <input id="u_bwc">
+  </div>
+
+  <div class="section">
+    Evidence Photo:
+    <input id="u_evidence_photo" type="file">
+  </div><br>
+
+  <input id="u_id" placeholder="LSPD-UOF-0000">
+
+  <center><br>
+  <div class="button" onclick="previewUOF()">CONFIRM</div>
+  <div class="button" onclick="goBack()">BACK</div>
+</div></center>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<script>
+function openForm() {
+  home.style.display = "none";
+  form.style.display = "block";
+  uof.style.display = "none";
+}
+
+function openuof() {
+  home.style.display = "none";
+  form.style.display = "none";
+  uof.style.display = "block";
+}
+
+function goBack() {
+  home.style.display = "block";
+  form.style.display = "none";
+  uof.style.display = "none";
+}
+
+/* ===== Evidence ===== */
+function previewReport() {
+
+const text = `# __EVIDENCE REPORT__
+**Date:** ${document.querySelector('#form input[type="date"]').value}
+----
+__**PERSON INVOLVED INFORMATION**__
+- **Name(s):** ${document.querySelectorAll('#form input[type="text"]')[0].value}
+- **Evidence Type(s):** ${document.querySelectorAll('#form input[type="text"]')[1].value}
+
+__**ITEM(S) SEIZED**__
+N/A
+
+__**INCIDENT INFORMATION**__
+- **Time of Occurrence:** ${document.querySelector('#form input[type="time"]').value}
+- **Date of Occurrence:** ${document.querySelectorAll('#form input[type="date"]')[1].value}
+- **Location:** ${document.querySelectorAll('#form input[type="text"]')[2].value}
+
+__**EMPLOYEE INFORMATION**__
+- **Officer:** ${document.querySelectorAll('#form input[type="text"]')[3].value}
+- **Callsign:** ${document.querySelectorAll('#form input[type="text"]')[4].value}
+
+__**BWC / DASHCAM / PHOTO:**__
+- N/A
+- N/A
+- **Evidence Photo:** N/A
+
+---
+
+### -- END OF PAGE --
+*${reportId.value} | Los Santos Police Department - Evidence Report File*`;
+
+openReportPage(text);
+}
+
+/* ===== UOF ===== */
+function previewUOF() {
+
+const text = `# __USE OF FORCE REPORT__
+**Date Submitted:** ${u_date.value}
+----
+### __EMPLOYEE INFORMATION:__
+- **Officer Name:** ${u_officer.value}
+- **Callsign / Unit:** ${u_callsign.value}
+
+---
+### __INCIDENT INFORMATION:__
+- **Time of Occurrence:** ${u_time.value}
+- **Date of Occurrence:** ${u_date2.value}
+- **Location:** ${u_location.value}
+
+---
+### __NARRATIVE__
+**UOF TYPE:** ${u_type.value}
+
+---
+### __EVIDENCE & RECORDINGS:__
+- **Supporting Evidence:** ${u_evidence.value}
+- **BWC / Dashboard Footage:** ${u_bwc.value}
+- **Evidence Photo:** ${u_evidence_photo.value}
+
+---
+-- END OF REPORT --
+*${u_id.value || "LSPD-UOF-0000"} | Los Santos Police Department - Use Of Force Report File*`;
+
+openReportPage(text);
+}
+
+/* ===== เปิดหน้าเอกสาร ===== */
+function openReportPage(text) {
+
+const win = window.open('', '_blank');
+
+win.document.write(`
+<html>
+<head>
+<style>
+body { font-family: Arial; background:white; color:black; padding:30px;}
+pre { white-space: pre-wrap; font-size:16px;}
+button { margin:10px; padding:10px;}
+</style>
+</head>
+
+<body>
+
+<div id="report"><pre>${text}</pre></div>
+
+<button onclick="copy()">COPY</button>
+<button onclick="download()">SAVE IMAGE</button>
+<button onclick="window.print()">PRINT</button>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"><\/script>
+
+<script>
+function copy(){
+ navigator.clipboard.writeText(document.getElementById('report').innerText);
+ alert('Copied');
+}
+function download(){
+ html2canvas(document.getElementById('report')).then(c=>{
+  let a=document.createElement('a');
+  a.href=c.toDataURL();
+  a.download='report.png';
+  a.click();
+ });
+}
+<\/script>
+
+</body>
+</html>
+`);
+}
+
+function login() {
+  const pass = document.getElementById("password").value;
+
+//ใส่รหัส เพิ่มตรงนี้
+  if (pass === "1234") {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("home").style.display = "block";
+  } else {
+    document.getElementById("error").innerText = "Wrong password!";
+  }
+
+  if (pass === "9898") {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("home").style.display = "block";
+  } else {
+    document.getElementById("error").innerText = "Wrong password!";
+  }
+
+}
+
+</script>
